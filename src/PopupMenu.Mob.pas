@@ -65,23 +65,14 @@ type
 
   TTitulo = class(TLabel)
   private
-    FCorDivisor: TAlphaColor;
     FTitulo: String;
-    FLarguraDivisor: Single;
-    FCorBorda: TAlphaColor;
-    procedure SetCorBorda(const Value: TAlphaColor);
-    procedure SetCorDivisor(const Value: TAlphaColor);
-    procedure SetLarguraDivisor(const Value: Single);
     procedure SetTitulo(const Value: String);
-    public
-      { public declarations }
-      constructor Create(AOwner: TComponent); override;
-      destructor Destroy; override;
-    published
-      property Titulo: String read FTitulo write SetTitulo;
-      property CorDivisor: TAlphaColor read FCorDivisor write SetCorDivisor default $FF1E90FF;
-      property CorBorda: TAlphaColor read FCorBorda write SetCorBorda default $00000000;
-      property LarguraDivisor: Single read FLarguraDivisor write SetLarguraDivisor;
+  public
+    { public declarations }
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+  published
+    property Titulo: String read FTitulo write SetTitulo;
   end;
 
   TItemLabel = class(TLabel)
@@ -129,9 +120,9 @@ type
   published
   { published declarations }
     property Titulo: String read FTitulo write SetTitulo;
-    property CorDivisor: TAlphaColor read FCorDivisor write SetCorDivisor default $FF1E90FF;
-    property CorBorda: TAlphaColor read FCorBorda write SetCorBorda default $00000000;
-    property LarguraDivisor: Single read FLarguraDivisor write SetLarguraDivisor;
+//    property CorDivisor: TAlphaColor read FCorDivisor write SetCorDivisor default $FF1E90FF;
+//    property CorBorda: TAlphaColor read FCorBorda write SetCorBorda default $00000000;
+//    property LarguraDivisor: Single read FLarguraDivisor write SetLarguraDivisor;
     property Items: TStrings read GetItems write SetItems;
   end;
 
@@ -289,7 +280,7 @@ begin
   lyTitulo.Parent := Self;
 
   //Linha de Divisão do Menu
-  FDivisor := TLinhaDiv.Create(Self);
+  FDivisor := TLinhaDiv.Create(nil);
   FDivisor.Parent := lyTitulo;
 //  FDivisor.Height := FLarguraDivisor;
 //  FDivisor.Fill.Color := FCorDivisor; // Dodgerblue;
@@ -498,7 +489,6 @@ begin
   TextSettings.Font.Style := [TFontStyle.fsBold];
   TextSettings.Trimming := TTextTrimming.None;
   StyledSettings := [TStyledSetting.Family,TStyledSetting.FontColor];
-
 end;
 
 destructor TTitulo.Destroy;
