@@ -45,14 +45,14 @@ type
       destructor Destroy; override;
   end;
 
-  TTituloLayout = class(TLayout)
+  TTituloLayout = class(TMenuMob)
     public
       { public declarations }
       constructor Create(AOwner: TComponent); override;
       destructor Destroy; override;
   end;
 
-  TLinhaDiv = class(TRectangle)
+  TLinhaDiv = class(TFundo)
   private
     FCorDivisor: TAlphaColor;
     FLarguraDivisor: Single;
