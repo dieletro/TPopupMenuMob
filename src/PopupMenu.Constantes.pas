@@ -43,6 +43,9 @@ lyMenu_Opcoes_Margem_Esquerda : Single = 10;
 lyMenu_Opcoes_Margem_Direita : Single = 10;
 lyMenu_Opcoes_PosicaoX : Single = 0;
 lyMenu_Opcoes_PosicaoY : Single = 0;
+lyMenu_Opcoes_Comp_Nome : String = 'lytMenuMob';
+
+lyTitulo_Comp_Nome : String = 'lyt';
 
 Item_Altura : Single = 56;
 Item_Cor_Fundo : Cardinal = $FFFFFFFF;
@@ -59,6 +62,9 @@ lbItem_Fonte_Tamanho : Single = 16;
 lbItem_Comp_Nome : String = 'MobiItem';
 
 Divisor_Comp_Nome : String = 'LinhaDiv';
+Divisor_Cor_Fundo : Cardinal = $FF1E90FF;
+Divisor_Cor_Borda : Cardinal = $FF000000;
+Divisor_Largura_Divisor : Single = 2;
 
 implementation
 

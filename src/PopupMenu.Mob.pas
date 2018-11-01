@@ -207,6 +207,7 @@ begin
   Margins.Right := lyMenu_Opcoes_Margem_Direita;
   Align := TAlignLayout.Client;
   Visible := True;
+  Name := lyMenu_Opcoes_Comp_Nome+IntToStr(ComponentCount+1);
 
   rcFundo := TFundoMenu.Create(Self);
   rcFundo.Parent := Self;
@@ -215,12 +216,12 @@ begin
   rcOpcoes := TMenuOpcoes.Create(nil);
   rcOpcoes.Width := Menu_Opcoes_Largura;  // Exemplo de Edição...
   rcOpcoes.Height := Menu_Opcoes_Altura; // Exemplo de Edição...
-  rcOpcoes.Name := Menu_Opcoes_Comp_Nome+IntToStr(rcOpcoes.ComponentCount); //Esse 1 é para compensar os TRectangle que já forma criados
+  rcOpcoes.Name := Menu_Opcoes_Comp_Nome+IntToStr(rcOpcoes.ComponentCount+1); //Esse 1 é para compensar os TRectangle que já forma criados
   rcOpcoes.Parent := Self;
   rcOpcoes.BringToFront;
   rcOpcoes.Titulo := Menu_Opcoes_Titulo;
-  rcOpcoes.CorDivisor := Menu_Opcoes_Cor_Divisor;
-  rcOpcoes.LarguraDivisor := Menu_Opcoes_Largura_Divisor;
+//  rcOpcoes.CorDivisor := Menu_Opcoes_Cor_Divisor;
+//  rcOpcoes.LarguraDivisor := Menu_Opcoes_Largura_Divisor;
 
 end;
 
@@ -267,6 +268,7 @@ begin
  YRadius := YRadius_Padrao;
  Width := Opcoes_Width;
  Height := Opcoes_Height;
+ Name := 'MenuOpcoes'+IntToStr(ComponentCount+1);
 
 
   // Lista de Itens do Menu
@@ -277,6 +279,7 @@ begin
   lyTitulo := TLayout.Create(nil);
   lyTitulo.Height := lyTitulo_Altura;
   lyTitulo.Align := TAlignLayout.MostTop;
+  lyTitulo.Name := lyTitulo_Comp_Nome+IntToStr(lyTitulo.ComponentCount+1);
   lyTitulo.Parent := Self;
 
   //Linha de Divisão do Menu
@@ -292,7 +295,6 @@ begin
   //Label do Titulo...
   FlblTitulo := TTitulo.Create(nil); //O Nil Permite que possamos editar no Modo Design
   FlblTitulo.Text := FTitulo;
-  FlblTitulo.Name := lbTitulo_Comp_nome+IntToStr(FlblTitulo.ComponentCount);
   FlblTitulo.Parent := lyTitulo;
 
 
@@ -315,23 +317,7 @@ destructor TMenuOpcoes.Destroy;
 var
   I: Integer;
 begin
-{
-Está dando Erro ao Destruir os Objetos...
-}
-//  for I := FItems.Count  downto 0 do
-//  Begin
-//    FreeAndNil(FItem.Components[I].Owner);
-//    FreeAndNil(FlblNomeItem.Components[I].Owner);
-//  End;
 //
-//  lyTitulo.Free;
-//  FlblTitulo.Free;
-//  FDivisor.Free;
-//  FreeAndNil(FItem);
-//  FlblNomeItem.Free;
-//  FAnimacao.Free;
-//
-//  FItems.Free;
   inherited;
 end;
 
@@ -449,6 +435,7 @@ begin
   XRadius := Item_XRadius;
   YRadius := Item_YRadius;
   Align := TAlignLayout.MostTop;
+  Name := Item_Comp_Nome + InTToStr(ComponentCount+1);
 end;
 
 destructor TItem.Destroy;
@@ -469,6 +456,7 @@ begin
   StyledSettings := [TStyledSetting.Family,TStyledSetting.FontColor, TStyledSetting.Style];
   TextSettings.HorzAlign := TTextAlign.Center;
   TextSettings.Font.Size := lbItem_Fonte_Tamanho;
+  Name := lbItem_Comp_Nome + InTToStr(ComponentCount+1);
 end;
 
 destructor TItemLabel.Destroy;
@@ -489,6 +477,7 @@ begin
   TextSettings.Font.Style := [TFontStyle.fsBold];
   TextSettings.Trimming := TTextTrimming.None;
   StyledSettings := [TStyledSetting.Family,TStyledSetting.FontColor];
+  Name := lbTitulo_Comp_nome+IntToStr(ComponentCount+1);
 end;
 
 destructor TTitulo.Destroy;
@@ -497,20 +486,20 @@ begin
   inherited;
 end;
 
-procedure TTitulo.SetCorBorda(const Value: TAlphaColor);
-begin
-  FCorBorda := Value;
-end;
-
-procedure TTitulo.SetCorDivisor(const Value: TAlphaColor);
-begin
-  FCorDivisor := Value;
-end;
-
-procedure TTitulo.SetLarguraDivisor(const Value: Single);
-begin
-  FLarguraDivisor := Value;
-end;
+//procedure TTitulo.SetCorBorda(const Value: TAlphaColor);
+//begin
+//  FCorBorda := Value;
+//end;
+//
+//procedure TTitulo.SetCorDivisor(const Value: TAlphaColor);
+//begin
+//  FCorDivisor := Value;
+//end;
+//
+//procedure TTitulo.SetLarguraDivisor(const Value: Single);
+//begin
+//  FLarguraDivisor := Value;
+//end;
 
 procedure TTitulo.SetTitulo(const Value: String);
 begin
@@ -530,7 +519,7 @@ begin
   PropertyName := Animacao_Pro_Nome;
   StartValue := Animacao_Valor_Inicio;
   StopValue := Animacao_Valor_Final;
-  Name := Animacao_Comp_Nome+IntToStr(ComponentCount);
+  Name := Animacao_Comp_Nome+IntToStr(ComponentCount+1);
 end;
 
 destructor TAnimacaoF.Destroy;
@@ -545,11 +534,11 @@ constructor TLinhaDiv.Create(AOwner: TComponent);
 begin
   inherited;
   //Linha de Divisão do Menu
-  Height := FLarguraDivisor;
-  Fill.Color := FCorDivisor; // Dodgerblue;
-  Stroke.Color := FCorBorda; // Null
+  Height := Divisor_Largura_Divisor;
+  Fill.Color := Divisor_Cor_Fundo; // Dodgerblue;
+  Stroke.Color := Divisor_Cor_Borda; // Null
   Align := TAlignLayout.Bottom;
-  Name := Divisor_Comp_Nome+IntToStr(ComponentCount);
+  Name := Divisor_Comp_Nome+IntToStr(ComponentCount+1);
 end;
 
 destructor TLinhaDiv.Destroy;
