@@ -64,7 +64,8 @@ lbItem_Comp_Nome : String = 'MobiItem';
 Divisor_Comp_Nome : String = 'LinhaDiv';
 Divisor_Cor_Fundo : Cardinal = $FF1E90FF;
 Divisor_Cor_Borda : Cardinal = $FF000000;
-Divisor_Largura_Divisor : Single = 2;
+Divisor_Largura : Single = 2;
+Divisor_Largura_Linha : Single = 0;
 
 implementation
 
