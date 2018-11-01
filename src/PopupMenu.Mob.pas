@@ -25,21 +25,22 @@ uses
 
 procedure FreeAndNil(var Obj);
 
-var
-  lyTitulo : TLayout;
-  FlblTitulo : TLabel;
-  FDivisor : TRectangle;
-  FlblNomeItem : TLabel;
-  FAnimacao : TFloatAnimation;
-  FHabilitado: Boolean;
- // FVertScrollBox : TVertScrollBox; //Em Teste...
-
 type
   TFundo = class(TRectangle);
   TMenuMob = class(TLayout);
   TMenuMobLabel = class(TLabel);
   TAnimacaoFlutuante = class(TFloatAnimation);
 
+var
+  lyTitulo : TLayout;
+  FlblTitulo : TLabel;//TMenuMobLabel;//
+  FDivisor : TRectangle;
+  FlblNomeItem : TLabel;//TMenuMobLabel;
+  FAnimacao : TAnimacaoFlutuante;
+  FHabilitado: Boolean;
+ // FVertScrollBox : TVertScrollBox; //Em Teste...
+
+type
   TAnimacaoF = class(TAnimacaoFlutuante)
     public
       { public declarations }
@@ -47,7 +48,7 @@ type
       destructor Destroy; override;
   end;
 
-  TTituloLayout = class(TMenuMob)
+  TTituloLayout = class(TLayout)
     public
       { public declarations }
       constructor Create(AOwner: TComponent); override;
@@ -72,19 +73,15 @@ type
       property LarguraDivisor: Single read FLarguraDivisor write SetLarguraDivisor;
   end;
 
-  TTitulo = class(TMenuMobLabel)
-  private
-    FTitulo: String;
-    procedure SetTitulo(const Value: String);
-  public
-    { public declarations }
-    constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;
-  published
-    property Titulo: String read FTitulo write SetTitulo;
+  TTitulo = class(TLabel)
+    public
+      { public declarations }
+      constructor Create(AOwner: TComponent); override;
+      destructor Destroy; override;
+    published
   end;
 
-  TItemLabel = class(TMenuMobLabel)
+  TItemLabel = class(TLabel)
   public
     { public declarations }
     constructor Create(AOwner: TComponent); override;
@@ -100,7 +97,6 @@ type
 
   TMenuOpcoes = class(TFundo)
   private
-    FTitulo: String;
     FItem : TItem;
     FCorDivisor: TAlphaColor;
     FLarguraDivisor: Single;
@@ -108,7 +104,6 @@ type
     FItems: TStrings;
     FAoDestruir: TNotifyEvent;
     FCorBorda: TAlphaColor;
-    procedure SetTitulo(const Value: String);
     procedure SetCorDivisor(const Value: TAlphaColor);
     procedure SetLarguraDivisor(const Value: Single);
     procedure SetAoFechar(const Value: TNotifyEvent);
@@ -128,10 +123,6 @@ type
     destructor Destroy; override;
   published
   { published declarations }
-    property Titulo: String read FTitulo write SetTitulo;
-//    property CorDivisor: TAlphaColor read FCorDivisor write SetCorDivisor default $FF1E90FF;
-//    property CorBorda: TAlphaColor read FCorBorda write SetCorBorda default $00000000;
-//    property LarguraDivisor: Single read FLarguraDivisor write SetLarguraDivisor;
     property Items: TStrings read GetItems write SetItems;
   end;
 
@@ -228,11 +219,6 @@ begin
   rcOpcoes.Name := Menu_Opcoes_Comp_Nome+IntToStr(rcOpcoes.ComponentCount+1); //Esse 1 é para compensar os TRectangle que já forma criados
   rcOpcoes.Parent := Self;
   rcOpcoes.BringToFront;
-  rcOpcoes.Titulo := Menu_Opcoes_Titulo;
-//Não é Mais Necessário passar estas Propriedades aqui!
-//  rcOpcoes.CorDivisor := Menu_Opcoes_Cor_Divisor;
-//  rcOpcoes.LarguraDivisor := Menu_Opcoes_Largura_Divisor;
-
 end;
 
 destructor TPopupMenuMob.Destroy;
@@ -302,8 +288,6 @@ begin
 end;
 
 destructor TMenuOpcoes.Destroy;
-var
-  I: Integer;
 begin
 //
   inherited;
@@ -388,11 +372,6 @@ begin
   FDivisor.Height := FLarguraDivisor;
 end;
 
-procedure TMenuOpcoes.SetTitulo(const Value: String);
-begin
-  FTitulo := Value;
-  FlblTitulo.Text := FTitulo;
-end;
 
 { TFundoMenu }
 
@@ -463,6 +442,7 @@ constructor TTitulo.Create(AOwner: TComponent);
 begin
   inherited;
   Align := TAlignLayout.Client;
+  Text   := Menu_Opcoes_Titulo;
   Margins.Left := lbTitulo_Margin_Esquerda;
   Margins.Right := lbTitulo_Margin_Direita;
   TextSettings.Font.Size := lbTitulo_Fonte_Tamanho;
@@ -470,33 +450,13 @@ begin
   TextSettings.Trimming := TTextTrimming.None;
   StyledSettings := [TStyledSetting.Family,TStyledSetting.FontColor];
   Name := lbTitulo_Comp_nome+IntToStr(ComponentCount+1);
-  Text   := Menu_Opcoes_Titulo;
+
 end;
 
 destructor TTitulo.Destroy;
 begin
   //
   inherited;
-end;
-
-//procedure TTitulo.SetCorBorda(const Value: TAlphaColor);
-//begin
-//  FCorBorda := Value;
-//end;
-//
-//procedure TTitulo.SetCorDivisor(const Value: TAlphaColor);
-//begin
-//  FCorDivisor := Value;
-//end;
-//
-//procedure TTitulo.SetLarguraDivisor(const Value: Single);
-//begin
-//  FLarguraDivisor := Value;
-//end;
-
-procedure TTitulo.SetTitulo(const Value: String);
-begin
-  FTitulo := Value;
 end;
 
 { TAnimacaoF }
@@ -544,16 +504,19 @@ end;
 procedure TLinhaDiv.SetCorBorda(const Value: TAlphaColor);
 begin
   FCorBorda := Value;
+  Stroke.Color := FCorBorda;
 end;
 
 procedure TLinhaDiv.SetCorDivisor(const Value: TAlphaColor);
 begin
   FCorDivisor := Value;
+  Fill.Color := FCorDivisor;
 end;
 
 procedure TLinhaDiv.SetLarguraDivisor(const Value: Single);
 begin
   FLarguraDivisor := Value;
+  Height := FLarguraDivisor;
 end;
 
 { TTituloLayout }
