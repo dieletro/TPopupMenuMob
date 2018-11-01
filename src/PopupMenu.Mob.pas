@@ -37,8 +37,10 @@ var
 type
   TFundo = class(TRectangle);
   TMenuMob = class(TLayout);
+  TMenuMobLabel = class(TLabel);
+  TAnimacaoFlutuante = class(TFloatAnimation);
 
-  TAnimacaoF = class(TFloatAnimation)
+  TAnimacaoF = class(TAnimacaoFlutuante)
     public
       { public declarations }
       constructor Create(AOwner: TComponent); override;
@@ -70,7 +72,7 @@ type
       property LarguraDivisor: Single read FLarguraDivisor write SetLarguraDivisor;
   end;
 
-  TTitulo = class(TLabel)
+  TTitulo = class(TMenuMobLabel)
   private
     FTitulo: String;
     procedure SetTitulo(const Value: String);
@@ -82,7 +84,7 @@ type
     property Titulo: String read FTitulo write SetTitulo;
   end;
 
-  TItemLabel = class(TLabel)
+  TItemLabel = class(TMenuMobLabel)
   public
     { public declarations }
     constructor Create(AOwner: TComponent); override;
@@ -260,19 +262,19 @@ constructor TMenuOpcoes.Create(AOwner: TComponent);
 begin
   inherited;
   //Teste...
-//  FVertScrollBox := TVertScrollBox.Create(Self);
-//  FVertScrollBox.Align := TAlignLayout.Client;
+  //  FVertScrollBox := TVertScrollBox.Create(Self);
+  //  FVertScrollBox.Align := TAlignLayout.Client;
 
   // Padrão para criação do menu das Opções
- Align := TAlignLayout.Center;
- Fill.Color := Opcoes_Cor_Fundo; // $FFFFFF = White; FF = 255 Alpha
- Stroke.Color := Opcoes_Cor_Borda; // Borda Null
-// Parent := Self;//FVertScrollBox; //
- XRadius  := XRadius_Padrao;
- YRadius  := YRadius_Padrao;
- Width    := Opcoes_Width;
- Height   := Opcoes_Height;
- Name     := 'MenuOpcoes'+IntToStr(ComponentCount+1);
+  Align := TAlignLayout.Center;
+  Fill.Color := Opcoes_Cor_Fundo; // $FFFFFF = White; FF = 255 Alpha
+  Stroke.Color := Opcoes_Cor_Borda; // Borda Null
+  // Parent := Self;//FVertScrollBox; //
+  XRadius  := XRadius_Padrao;
+  YRadius  := YRadius_Padrao;
+  Width    := Opcoes_Width;
+  Height   := Opcoes_Height;
+  Name     := 'MenuOpcoes'+IntToStr(ComponentCount+1);
 
 
   // Lista de Itens do Menu
@@ -289,7 +291,6 @@ begin
 
   //Label do Titulo...
   FlblTitulo := TTitulo.Create(nil); //O Nil Permite que possamos editar no Modo Design
-  FlblTitulo.Text   := FTitulo;
   FlblTitulo.Parent := lyTitulo;
 
 
@@ -469,6 +470,7 @@ begin
   TextSettings.Trimming := TTextTrimming.None;
   StyledSettings := [TStyledSetting.Family,TStyledSetting.FontColor];
   Name := lbTitulo_Comp_nome+IntToStr(ComponentCount+1);
+  Text   := Menu_Opcoes_Titulo;
 end;
 
 destructor TTitulo.Destroy;
