@@ -402,7 +402,7 @@ begin
   Stroke.Thickness := Item_Largura_Linha; //Largura da borda do retangulo do item
   XRadius := Item_XRadius;
   YRadius := Item_YRadius;
-  Align := TAlignLayout.MostTop;
+  Align := TAlignLayout.Top;
   Name := Item_Comp_Nome + InTToStr(ComponentCount+1);
   Margins.Left  := 3;
   Margins.Right := 3;
