@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2018/09/04 18:53:59.000.756,=C:\Users\Diego\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2018/10/16 20:34:44.000.750,=C:\Users\Diego\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2018/11/02 11:49:42.255,=C:\Users\Diego\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2018/11/02 11:51:17.100,G:\01 - Programas\00 - Programação\02 - Embarcado\00 - Delphi\00 - ComponentesDelphi\TPopupMenuMob\Component\GitHub\TPopupMenuMob\src\uTeste.fmx=C:\Users\Diego\Documents\Embarcadero\Studio\Projects\Unit1.fmx</Transaction>
+    <Transaction>2018/11/02 11:51:17.100,G:\01 - Programas\00 - Programação\02 - Embarcado\00 - Delphi\00 - ComponentesDelphi\TPopupMenuMob\Component\GitHub\TPopupMenuMob\src\uTeste.pas=C:\Users\Diego\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2018/11/02 11:51:31.210,G:\01 - Programas\00 - Programação\02 - Embarcado\00 - Delphi\00 - ComponentesDelphi\TPopupMenuMob\Component\GitHub\TPopupMenuMob\src\PopupMobTeste.dproj=C:\Users\Diego\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+  </Transactions>
+	<ActiveMobileDevice>
+		<NoProfile iOSSimulator="iPhone5"/>
+	</ActiveMobileDevice>
+</BorlandProject>

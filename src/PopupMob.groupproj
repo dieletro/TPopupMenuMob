@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{70431EA1-6996-4519-A066-D6FC9F33858C}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="PopupMenuMob.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="PopupMobTeste.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="PopupMenuMob">
+        <MSBuild Projects="PopupMenuMob.dproj"/>
+    </Target>
+    <Target Name="PopupMenuMob:Clean">
+        <MSBuild Projects="PopupMenuMob.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PopupMenuMob:Make">
+        <MSBuild Projects="PopupMenuMob.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="PopupMobTeste">
+        <MSBuild Projects="PopupMobTeste.dproj"/>
+    </Target>
+    <Target Name="PopupMobTeste:Clean">
+        <MSBuild Projects="PopupMobTeste.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PopupMobTeste:Make">
+        <MSBuild Projects="PopupMobTeste.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="PopupMenuMob;PopupMobTeste"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="PopupMenuMob:Clean;PopupMobTeste:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="PopupMenuMob:Make;PopupMobTeste:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
