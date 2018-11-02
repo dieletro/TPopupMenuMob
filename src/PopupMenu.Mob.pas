@@ -214,9 +214,6 @@ begin
   rcFundo.OnClick := AoClicar;
 
   rcOpcoes := TMenuOpcoes.Create(nil);
-  rcOpcoes.Width := Menu_Opcoes_Largura;  // Exemplo de Edição...
-  rcOpcoes.Height := Menu_Opcoes_Altura; // Exemplo de Edição...
-  rcOpcoes.Name := Menu_Opcoes_Comp_Nome+IntToStr(rcOpcoes.ComponentCount+1); //Esse 1 é para compensar os TRectangle que já forma criados
   rcOpcoes.Parent := Self;
   rcOpcoes.BringToFront;
 end;
@@ -258,10 +255,9 @@ begin
   // Parent := Self;//FVertScrollBox; //
   XRadius  := XRadius_Padrao;
   YRadius  := YRadius_Padrao;
-  Width    := Opcoes_Width;
-  Height   := Opcoes_Height;
-  Name     := 'MenuOpcoes'+IntToStr(ComponentCount+1);
-
+  Width    := Menu_Opcoes_Largura;
+  Height   := Menu_Opcoes_Altura;
+  Name     := Menu_Opcoes_Comp_Nome+IntToStr(ComponentCount+1); // Somo 1 para sair do Zero
 
   // Lista de Itens do Menu
   FItems := TStringList.Create;
@@ -281,7 +277,7 @@ begin
 
 
   //Animação que será usada nos Objetos...
-  FAnimacao := TAnimacaoF.Create(Nil);
+  FAnimacao := TAnimacaoF.Create(nil);
   FAnimacao.Parent := Self;
   FAnimacao.OnFinish := AoFechar;
 

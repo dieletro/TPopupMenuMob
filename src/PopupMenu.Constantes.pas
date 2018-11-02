@@ -8,9 +8,6 @@ NomePaleta : String = 'Standard Mobile';
 XRadius_Padrao : Single = 6;
 YRadius_Padrao : Single = 6;
 
-Opcoes_Width : Single = 200;
-Opcoes_Height : Single = 300;
-
 Opcoes_Cor_Fundo : Cardinal = $FFFFFFFF;
 Opcoes_Cor_Borda : Cardinal = $00000000;
 
