@@ -1,10 +1,10 @@
-{*******************************************************************************
-* Embardacero Delphi Visual Component                                          *
-* PopUpMenuMob for Mobile devices                                              *
-********************************************************************************
-* Componente Criado Por Ruan Diego Lacerda Menezes & Douglas Colombo           *
-* Copyright (C) 2018                                                           *
-*******************************************************************************}
+{ *******************************************************************************
+  * Embardacero Delphi Visual Component                                          *
+  * PopUpMenuMob for Mobile devices                                              *
+  ********************************************************************************
+  * Componente Criado Por Ruan Diego Lacerda Menezes & Douglas Colombo           *
+  * Copyright (C) 2018                                                           *
+  ******************************************************************************* }
 
 unit PopupMenu.Mob;
 
@@ -20,9 +20,10 @@ uses
   FMX.StdCtrls, // Serve para TLabel
   FMX.ListBox, // Serve para o ListBox
   System.Generics.Collections, // Collections
-  System.SysUtils, //FreeAndNill...
+  System.SysUtils, // FreeAndNill...
   FMX.Ani, // serve para o TFloatAnimation
-  PopupMenu.Constantes; //Constantes do Projeto
+  FMX.ActnList, // ICaption..
+  PopupMenu.Constantes; // Constantes do Projeto
 
 procedure FreeAndNil(var Obj);
 
@@ -40,40 +41,39 @@ type
   TMenuMobScroll = class(TVertScrollBox);
 
 var
-  lyTitulo : TLayout;
-  FlblTitulo : TLabel;
-  FDivisor : TRectangle;
-  FlblNomeItem : TLabel;
-  FAnimacao : TAnimacaoFlutuante;
+  lyTitulo: TLayout;
+  FlblTitulo: TLabel;
+  FDivisor: TRectangle;
+  FAnimacao: TAnimacaoFlutuante;
   FHabilitado: Boolean;
 
 type
   TAnimacaoF = class(TAnimacaoFlutuante)
-    public
-      { public declarations }
-      constructor Create(AOwner: TComponent); override;
-      destructor Destroy; override;
+  public
+    { public declarations }
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
   end;
 
   // Classe em Teste....
   TMobScroll = class(TMenuMobScroll)
-    public
-      { public declarations }
-      constructor Create(AOwner: TComponent); override;
-      destructor Destroy; override;
+  public
+    { public declarations }
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
   end;
 
 var
-  FMenuMobScroll : TMobScroll; //Em Teste...
+  FMenuMobScroll: TMobScroll; // Em Teste...
 
 type
   TTituloLayout = class(TLayout)
-    private
-      procedure DoPaint; override;
-    public
-      { public declarations }
-      constructor Create(AOwner: TComponent); override;
-      destructor Destroy; override;
+  private
+    procedure DoPaint; override;
+  public
+    { public declarations }
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
   end;
 
   TLinhaDiv = class(TFundo)
@@ -84,31 +84,38 @@ type
     procedure SetCorBorda(const Value: TAlphaColor);
     procedure SetCorDivisor(const Value: TAlphaColor);
     procedure SetLarguraDivisor(const Value: Single);
-    public
-      { public declarations }
-      constructor Create(AOwner: TComponent); override;
-      destructor Destroy; override;
-    published
-      property CorDivisor: TAlphaColor read FCorDivisor write SetCorDivisor default $FF1E90FF;
-      property CorBorda: TAlphaColor read FCorBorda write SetCorBorda default $00000000;
-      property LarguraDivisor: Single read FLarguraDivisor write SetLarguraDivisor;
+  public
+    { public declarations }
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+  published
+    property CorDivisor: TAlphaColor read FCorDivisor write SetCorDivisor
+      default $FF1E90FF;
+    property CorBorda: TAlphaColor read FCorBorda write SetCorBorda
+      default $00000000;
+    property LarguraDivisor: Single read FLarguraDivisor
+      write SetLarguraDivisor;
   end;
 
   TTitulo = class(TLabel)
-    public
-      { public declarations }
-      constructor Create(AOwner: TComponent); override;
-      destructor Destroy; override;
-    published
+  public
+    { public declarations }
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+  published
   end;
 
-  TItemLabel = class(TLabel)
+  TItemLabel = class(TLabel, ICaption)
   public
     { public declarations }
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
   end;
 
+Var
+  FlblNomeItem: TItemLabel;
+
+type
   TItem = class(TFundo)
   private
     procedure DoPaint; override;
@@ -120,7 +127,8 @@ type
 
   TMenuOpcoes = class(TFundo)
   private
-    FItem : TItem;
+    FItem: TItem;
+    FstrTemp: TStrings; // Armasena os Itens inseridos...
     FAoFechar: TNotifyEvent;
     FItems: TStrings;
     FAoDestruir: TNotifyEvent;
@@ -139,12 +147,12 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
   published
-  { published declarations }
+    { published declarations }
     property Items: TStrings read GetItems write SetItems;
   end;
 
 Var
-  FFundo : TFundo;
+  FFundo: TFundo;
 
 Type
   TFundoMenu = class(TFundo)
@@ -159,7 +167,7 @@ Type
   published
     { published declarations }
 
-end;
+  end;
 
 type
   TPopupMenuMob = class(TMenuMob)
@@ -210,34 +218,34 @@ end;
 
 constructor TPopupMenuMob.Create(AOwner: TComponent);
 Var
-  rcOpcoes : TMenuOpcoes;
-  rcFundo : TFundoMenu;
-  MobScroll : TMobScroll;
+  rcOpcoes: TMenuOpcoes;
+  rcFundo: TFundoMenu;
+  MobScroll: TMobScroll;
 begin
   inherited;
-  //Layout Principal
+  // Layout Principal
   Position.X := lyMenu_Opcoes_PosicaoX;
   Position.Y := lyMenu_Opcoes_PosicaoY;
   Margins.Left := lyMenu_Opcoes_Margem_Esquerda;
   Margins.Right := lyMenu_Opcoes_Margem_Direita;
   Align := TAlignLayout.Client;
   Visible := True;
-  Name := lyMenu_Opcoes_Comp_Nome+IntToStr(ComponentCount+1);
+  Name := lyMenu_Opcoes_Comp_Nome + IntToStr(ComponentCount + 1);
 
-  //Fundo com transparencia
+  // Fundo com transparencia
   rcFundo := TFundoMenu.Create(Self);
   rcFundo.Parent := Self;
   rcFundo.OnClick := AoClicar;
 
-  //Menu de Opções
+  // Menu de Opções
   rcOpcoes := TMenuOpcoes.Create(nil);
   rcOpcoes.Parent := Self;
   rcOpcoes.BringToFront;
 
-//  //Controle de Scroll para os itens...
-//  MobScroll := TMobScroll.Create(nil);
-//  MobScroll.Align := TAlignLayout.Client;
-//  MobScroll.Parent := rcOpcoes;
+  // //Controle de Scroll para os itens...
+  // MobScroll := TMobScroll.Create(nil);
+  // MobScroll.Align := TAlignLayout.Client;
+  // MobScroll.Parent := rcOpcoes;
 end;
 
 destructor TPopupMenuMob.Destroy;
@@ -255,40 +263,42 @@ end;
 constructor TMenuOpcoes.Create(AOwner: TComponent);
 begin
   inherited;
-// Padrão para criação do menu das Opções
+  // Padrão para criação do menu das Opções
   Align := TAlignLayout.Center;
-  XRadius  := XRadius_Padrao;
-  YRadius  := YRadius_Padrao;
-  Width    := Menu_Opcoes_Largura;
-  Height   := Menu_Opcoes_Altura;
+  XRadius := XRadius_Padrao;
+  YRadius := YRadius_Padrao;
+  Width := Menu_Opcoes_Largura;
+  Height := Menu_Opcoes_Altura;
 
-//  Fill.Color := Opcoes_Cor_Fundo; // $FFFFFF = White; FF = 255 Alpha
-//  Stroke.Color := Opcoes_Cor_Borda; // Borda Null
-// // Parent := FMenuMobScroll;//FVertScrollBox; //
-//  Name     := Menu_Opcoes_Comp_Nome+IntToStr(ComponentCount+1); // Somo 1 para sair do Zero
+  // Fill.Color := Opcoes_Cor_Fundo; // $FFFFFF = White; FF = 255 Alpha
+  // Stroke.Color := Opcoes_Cor_Borda; // Borda Null
+  // // Parent := FMenuMobScroll;//FVertScrollBox; //
+  // Name     := Menu_Opcoes_Comp_Nome+IntToStr(ComponentCount+1); // Somo 1 para sair do Zero
 
-//Controle de Scroll para os itens...
-//  FMenuMobScroll := TMobScroll.Create(Self);
-//  FMenuMobScroll.Align := TAlignLayout.Client;
-//  FMenuMobScroll.Parent := Self;
+  // Controle de Scroll para os itens...
+  // FMenuMobScroll := TMobScroll.Create(Self);
+  // FMenuMobScroll.Align := TAlignLayout.Client;
+  // FMenuMobScroll.Parent := Self;
 
   // Lista de Itens do Menu
   FItems := TStringList.Create;
+  FstrTemp := TStrings.Create;
   // TStringList(FItems).OnChange := DoItemsChanged;
 
-  //Layout de Fundo
+  // Layout de Fundo
   lyTitulo := TTituloLayout.Create(nil);
   lyTitulo.Parent := Self;
 
-  //Linha de Divisão do Menu
+  // Linha de Divisão do Menu
   FDivisor := TLinhaDiv.Create(nil);
   FDivisor.Parent := lyTitulo;
 
-  //Label do Titulo...
-  FlblTitulo := TTitulo.Create(nil); //O Nil Permite que possamos editar no Modo Design
+  // Label do Titulo...
+  FlblTitulo := TTitulo.Create(nil);
+  // O Nil Permite que possamos editar no Modo Design
   FlblTitulo.Parent := lyTitulo;
 
-  //Animação que será usada nos Objetos...
+  // Animação que será usada nos Objetos...
   FAnimacao := TAnimacaoF.Create(nil);
   FAnimacao.Parent := Self;
   FAnimacao.OnFinish := AoFechar;
@@ -297,19 +307,19 @@ end;
 
 destructor TMenuOpcoes.Destroy;
 begin
-//
+  //
   inherited;
 end;
 
 procedure TMenuOpcoes.DoPaint;
 begin
   inherited;
-  Anchors := [TAnchorKind.akLeft,TAnchorKind.akRight,TAnchorKind.akTop];
+  Anchors := [TAnchorKind.akLeft, TAnchorKind.akRight, TAnchorKind.akTop];
 end;
 
 function TMenuOpcoes.GetItems: TStrings;
 begin
- Result := FItems;
+  Result := FItems;
 end;
 
 procedure TMenuOpcoes.SetAoDestruir(const Value: TNotifyEvent);
@@ -326,28 +336,36 @@ end;
 procedure TMenuOpcoes.SetItems(const Value: TStrings);
 var
   I: Integer;
+  E: Integer;
 begin
-{
-Este metodo recupera os itens gravados na variavel e atribui a lista porém
-gera um bug ao inserir novos itens
-FItems.Assign(Value);
-}
-
+  {
+    Este metodo recupera os itens gravados na variavel e atribui a lista porém
+    gera um bug ao inserir novos itens
+    FItems.Assign(Value);
+  }
+  FItems.Assign(Value);
+  // FstrTemp.Assign(Value);
   // uso este metodo para que a lis9ta seja limpa a cada nova inserção
-  FItems := Value;
+ // FstrTemp := Value;
+  for I := FItems.Count - 1 downto 0 do
+  Begin
+    FstrTemp := FItems.Strings[I];
+  End;
 
-  for I := FItems.Count -1 downto 0 do
+
+  for I := FstrTemp.Count - 1 downto 0 do
   Begin
     FItem := TItem.Create(nil);
     FItem.Parent := Self;
-    FItem.Name := Item_Comp_Nome + IntToStr(I+1);
+    FItem.Name := Item_Comp_Nome + IntToStr(I + 1);
 
     FlblNomeItem := TItemLabel.Create(nil);
-    FlblNomeItem.Text := Fitems.Strings[I];
+    FlblNomeItem.Text := FstrTemp.Strings[I];
     FlblNomeItem.Parent := FItem;
-    FlblNomeItem.Name := lbItem_Comp_Nome + IntToStr(I+1);
-  End;
+    FlblNomeItem.Name := lbItem_Comp_Nome + IntToStr(I + 1);
 
+  End;
+  FstrTemp.Clear;
 end;
 
 { TFundoMenu }
@@ -359,7 +377,7 @@ begin
   Fill.Color := Fundo_Menu_Cor; // $000000 = Black; FF = 255 Alpha
   Stroke.Color := Fundo_Menu_Cor_Linha; // Null
   Opacity := Fundo_Menu_Opacidade;
-  Name := 'MobFundo'+IntToStr(ComponentCount+1);
+  Name := 'MobFundo' + IntToStr(ComponentCount + 1);
 end;
 
 destructor TFundoMenu.Destroy;
@@ -374,21 +392,22 @@ constructor TItem.Create(AOwner: TComponent);
 begin
   inherited;
   Height := Item_Altura;
-  Fill.Color := Item_Cor_Fundo; //White
+  Fill.Color := Item_Cor_Fundo; // White
   Stroke.Color := Item_Cor_Linha; // Dodgerblue;
-  Stroke.Thickness := Item_Largura_Linha; //Largura da borda do retangulo do item
+  Stroke.Thickness := Item_Largura_Linha;
+  // Largura da borda do retangulo do item
   XRadius := Item_XRadius;
   YRadius := Item_YRadius;
   Align := TAlignLayout.Top;
-  Name := Item_Comp_Nome + InTToStr(ComponentCount+1);
-  Margins.Left  := 3;
+  Name := Item_Comp_Nome + IntToStr(ComponentCount + 1);
+  Margins.Left := 3;
   Margins.Right := 3;
-  Margins.Top   := 3;
+  Margins.Top := 3;
 end;
 
 destructor TItem.Destroy;
 begin
- //
+  //
   inherited;
 end;
 
@@ -423,10 +442,11 @@ begin
   Height := lbItem_Altura;
   Margins.Left := lbItem_Margem_Esquerda;
   Margins.Right := lbItem_Margem_Direita;
-  StyledSettings := [TStyledSetting.Family,TStyledSetting.FontColor, TStyledSetting.Style];
+  StyledSettings := [TStyledSetting.Family, TStyledSetting.FontColor,
+    TStyledSetting.Style];
   TextSettings.HorzAlign := TTextAlign.Center;
   TextSettings.Font.Size := lbItem_Fonte_Tamanho;
-  Name := lbItem_Comp_Nome + InTToStr(ComponentCount+1);
+  Name := lbItem_Comp_Nome + IntToStr(ComponentCount + 1);
 end;
 
 destructor TItemLabel.Destroy;
@@ -441,14 +461,14 @@ constructor TTitulo.Create(AOwner: TComponent);
 begin
   inherited;
   Align := TAlignLayout.Client;
-  Text   := Menu_Opcoes_Titulo;
+  Text := Menu_Opcoes_Titulo;
   Margins.Left := lbTitulo_Margin_Esquerda;
   Margins.Right := lbTitulo_Margin_Direita;
   TextSettings.Font.Size := lbTitulo_Fonte_Tamanho;
   TextSettings.Font.Style := [TFontStyle.fsBold];
   TextSettings.Trimming := TTextTrimming.None;
-  StyledSettings := [TStyledSetting.Family,TStyledSetting.FontColor];
-  Name := lbTitulo_Comp_nome+IntToStr(ComponentCount+1);
+  StyledSettings := [TStyledSetting.Family, TStyledSetting.FontColor];
+  Name := lbTitulo_Comp_nome + IntToStr(ComponentCount + 1);
 
 end;
 
@@ -463,7 +483,7 @@ end;
 constructor TAnimacaoF.Create(AOwner: TComponent);
 begin
   inherited;
-  //Animação que será usada nos Objetos...
+  // Animação que será usada nos Objetos...
   AnimationType := TAnimationType.&In;
   Delay := Animacao_Dalay;
   Duration := Animacao_Duracao;
@@ -471,7 +491,7 @@ begin
   PropertyName := Animacao_Pro_Nome;
   StartValue := Animacao_Valor_Inicio;
   StopValue := Animacao_Valor_Final;
-  Name := Animacao_Comp_Nome+IntToStr(ComponentCount+1);
+  Name := Animacao_Comp_Nome + IntToStr(ComponentCount + 1);
 end;
 
 destructor TAnimacaoF.Destroy;
@@ -485,13 +505,13 @@ end;
 constructor TLinhaDiv.Create(AOwner: TComponent);
 begin
   inherited;
-  //Linha de Divisão do Menu
+  // Linha de Divisão do Menu
   Height := Divisor_Largura;
   Fill.Color := Divisor_Cor_Fundo; // Dodgerblue;
   Stroke.Color := Divisor_Cor_Borda; // Null
   Stroke.Thickness := Divisor_Largura_Linha;
   Align := TAlignLayout.Bottom;
-  Name := Divisor_Comp_Nome+IntToStr(ComponentCount+1);
+  Name := Divisor_Comp_Nome + IntToStr(ComponentCount + 1);
 end;
 
 destructor TLinhaDiv.Destroy;
@@ -523,10 +543,10 @@ end;
 constructor TTituloLayout.Create(AOwner: TComponent);
 begin
   inherited;
-  //Layout de Fundo
+  // Layout de Fundo
   Height := lyTitulo_Altura;
   Align := TAlignLayout.MostTop;
-  Name := lyTitulo_Comp_Nome+IntToStr(ComponentCount+1);
+  Name := lyTitulo_Comp_Nome + IntToStr(ComponentCount + 1);
   Margins.Left := 3;
   Margins.Right := 3;
   Margins.Top := 3;
@@ -543,7 +563,7 @@ begin
   inherited;
 
   if (Width > 89) and (Width <= 127) then
-    Height := 76;  //76
+    Height := 76; // 76
 
   if (Width > 73) and (Width <= 89) then
     Height := 106;
@@ -583,7 +603,8 @@ begin
   // Padrão para criação do menu das Opções
   Fill.Color := Opcoes_Cor_Fundo;
   Stroke.Color := Opcoes_Cor_Borda;
-  Name     := Menu_Opcoes_Comp_Nome+IntToStr(ComponentCount+1); // Somo 1 para sair do Zero
+  Name := Menu_Opcoes_Comp_Nome + IntToStr(ComponentCount + 1);
+  // Somo 1 para sair do Zero
 end;
 
 destructor TFundo.Destroy;
