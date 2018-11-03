@@ -41,12 +41,11 @@ type
 
 var
   lyTitulo : TLayout;
-  FlblTitulo : TLabel;//TMenuMobLabel;//
+  FlblTitulo : TLabel;
   FDivisor : TRectangle;
-  FlblNomeItem : TLabel;//TMenuMobLabel;
+  FlblNomeItem : TLabel;
   FAnimacao : TAnimacaoFlutuante;
   FHabilitado: Boolean;
- // FVertScrollBox : TVertScrollBox; //Em Teste...
 
 type
   TAnimacaoF = class(TAnimacaoFlutuante)
@@ -56,6 +55,7 @@ type
       destructor Destroy; override;
   end;
 
+  // Classe em Teste....
   TMobScroll = class(TMenuMobScroll)
     public
       { public declarations }
@@ -64,7 +64,7 @@ type
   end;
 
 var
-  FMenuMobScroll : TMobScroll;
+  FMenuMobScroll : TMobScroll; //Em Teste...
 
 type
   TTituloLayout = class(TLayout)
@@ -277,22 +277,19 @@ end;
 constructor TMenuOpcoes.Create(AOwner: TComponent);
 begin
   inherited;
-  //Teste...
-  //  FVertScrollBox := TVertScrollBox.Create(Self);
-  //  FVertScrollBox.Align := TAlignLayout.Client;
+// Padrão para criação do menu das Opções
+  Align := TAlignLayout.Center;
+  XRadius  := XRadius_Padrao;
+  YRadius  := YRadius_Padrao;
+  Width    := Menu_Opcoes_Largura;
+  Height   := Menu_Opcoes_Altura;
 
-  // Padrão para criação do menu das Opções
-//  Align := TAlignLayout.Center;
 //  Fill.Color := Opcoes_Cor_Fundo; // $FFFFFF = White; FF = 255 Alpha
 //  Stroke.Color := Opcoes_Cor_Borda; // Borda Null
 // // Parent := FMenuMobScroll;//FVertScrollBox; //
-//  XRadius  := XRadius_Padrao;
-//  YRadius  := YRadius_Padrao;
-//  Width    := Menu_Opcoes_Largura;
-//  Height   := Menu_Opcoes_Altura;
 //  Name     := Menu_Opcoes_Comp_Nome+IntToStr(ComponentCount+1); // Somo 1 para sair do Zero
 
-  //Controle de Scroll para os itens...
+//Controle de Scroll para os itens...
 //  FMenuMobScroll := TMobScroll.Create(Self);
 //  FMenuMobScroll.Align := TAlignLayout.Client;
 //  FMenuMobScroll.Parent := Self;
@@ -363,38 +360,26 @@ end;
 procedure TMenuOpcoes.SetItems(const Value: TStrings);
 var
   I: Integer;
-
-  procedure CriaItem;
-  Begin
-    FItem := TItem.Create(nil);
-    FItem.Parent := Self;
-    FItem.Name := Item_Comp_Nome + IntToStr(I+1);
-  End;
-
-  procedure CriaLabelItem;
-  Begin
-    FlblNomeItem := TItemLabel.Create(nil);
-    FlblNomeItem.Text := Fitems.Strings[I];
-    FlblNomeItem.Parent := FItem;
-    FlblNomeItem.Name := lbItem_Comp_Nome + IntToStr(I+1);
-  End;
-
 begin
-
 {
 Este metodo recupera os itens gravados na variavel e atribui a lista porém
 gera um bug ao inserir novos itens
 FItems.Assign(Value);
 }
 
-  // uso este metodo para que a lista seja limpa a cada nova inserção
+  // uso este metodo para que a lis9ta seja limpa a cada nova inserção
   FItems := Value;
 
   for I := FItems.Count -1 downto 0 do
   Begin
-    CriaItem;
+    FItem := TItem.Create(nil);
+    FItem.Parent := Self;
+    FItem.Name := Item_Comp_Nome + IntToStr(I+1);
 
-    CriaLabelItem;
+    FlblNomeItem := TItemLabel.Create(nil);
+    FlblNomeItem.Text := Fitems.Strings[I];
+    FlblNomeItem.Parent := FItem;
+    FlblNomeItem.Name := lbItem_Comp_Nome + IntToStr(I+1);
   End;
 
 end;
@@ -637,13 +622,8 @@ constructor TFundo.Create(AOwner: TComponent);
 begin
   inherited;
   // Padrão para criação do menu das Opções
-  Align := TAlignLayout.Center;
   Fill.Color := Opcoes_Cor_Fundo;
   Stroke.Color := Opcoes_Cor_Borda;
-  XRadius  := XRadius_Padrao;
-  YRadius  := YRadius_Padrao;
-  Width    := Menu_Opcoes_Largura;
-  Height   := Menu_Opcoes_Altura;
   Name     := Menu_Opcoes_Comp_Nome+IntToStr(ComponentCount+1); // Somo 1 para sair do Zero
 end;
 
