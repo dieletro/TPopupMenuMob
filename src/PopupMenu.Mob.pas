@@ -121,19 +121,13 @@ type
   TMenuOpcoes = class(TFundo)
   private
     FItem : TItem;
-    FCorDivisor: TAlphaColor;
-    FLarguraDivisor: Single;
     FAoFechar: TNotifyEvent;
     FItems: TStrings;
     FAoDestruir: TNotifyEvent;
-    FCorBorda: TAlphaColor;
-    procedure SetCorDivisor(const Value: TAlphaColor);
-    procedure SetLarguraDivisor(const Value: Single);
     procedure SetAoFechar(const Value: TNotifyEvent);
     procedure SetItems(const Value: TStrings);
     function GetItems: TStrings;
     procedure SetAoDestruir(const Value: TNotifyEvent);
-    procedure SetCorBorda(const Value: TAlphaColor);
     procedure DoPaint; override;
     { private declarations }
   protected
@@ -170,15 +164,10 @@ end;
 type
   TPopupMenuMob = class(TMenuMob)
   private
-    FLargura: Single;
     FItems: TStrings;
-    FTitulo: String;
-    FDivisorMenu: TRectangle;
     FAoExibir: TNotifyEvent;
     FAoClicar: TNotifyEvent;
-    function GetLargura: Single;
     procedure SetItens(const Value: TStrings);
-    procedure SetDivisorMenu(const Value: TRectangle);
     procedure SetAoClicar(const Value: TNotifyEvent);
     procedure SetAoExibir(const Value: TNotifyEvent);
     property AoClicar: TNotifyEvent read FAoClicar write SetAoClicar;
@@ -227,6 +216,7 @@ Var
 begin
   inherited;
   //Layout Principal
+  Create(nil);
   Position.X := lyMenu_Opcoes_PosicaoX;
   Position.Y := lyMenu_Opcoes_PosicaoY;
   Margins.Left := lyMenu_Opcoes_Margem_Esquerda;
@@ -254,17 +244,6 @@ end;
 destructor TPopupMenuMob.Destroy;
 begin
   inherited;
-end;
-
-function TPopupMenuMob.GetLargura: Single;
-begin
-  FLargura := Self.Width;
-  result := FLargura;
-end;
-
-procedure TPopupMenuMob.SetDivisorMenu(const Value: TRectangle);
-begin
-  FDivisorMenu := Value;
 end;
 
 procedure TPopupMenuMob.SetItens(const Value: TStrings);
@@ -345,18 +324,6 @@ begin
   FAnimacao.Enabled := False;
 end;
 
-procedure TMenuOpcoes.SetCorBorda(const Value: TAlphaColor);
-begin
-  FCorBorda := Value;
-  FDivisor.Stroke.Color := FCorBorda;
-end;
-
-procedure TMenuOpcoes.SetCorDivisor(const Value: TAlphaColor);
-begin
-  FCorDivisor := Value;
-  FDivisor.Fill.Color := FCorDivisor;
-end;
-
 procedure TMenuOpcoes.SetItems(const Value: TStrings);
 var
   I: Integer;
@@ -383,13 +350,6 @@ FItems.Assign(Value);
   End;
 
 end;
-
-procedure TMenuOpcoes.SetLarguraDivisor(const Value: Single);
-begin
-  FLarguraDivisor := Value;
-  FDivisor.Height := FLarguraDivisor;
-end;
-
 
 { TFundoMenu }
 
