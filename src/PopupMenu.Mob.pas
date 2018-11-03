@@ -216,7 +216,6 @@ Var
 begin
   inherited;
   //Layout Principal
-  Create(nil);
   Position.X := lyMenu_Opcoes_PosicaoX;
   Position.Y := lyMenu_Opcoes_PosicaoY;
   Margins.Left := lyMenu_Opcoes_Margem_Esquerda;
