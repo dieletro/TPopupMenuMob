@@ -352,7 +352,6 @@ begin
     FstrTemp := FItems.Strings[I];
   End;
 
-
   for I := FstrTemp.Count - 1 downto 0 do
   Begin
     FItem := TItem.Create(nil);
