@@ -344,21 +344,10 @@ procedure TMenuOpcoes.SetItems(const Value: TStrings);
 var
   I: Integer;
   E: Integer;
+  H, J: Integer;
 begin
-  {
-    Este metodo recupera os itens gravados na variavel e atribui a lista porém
-    gera um bug ao inserir novos itens
-    FItems.Assign(Value);
-  }
-  FItems.Assign(Value);
-  // FstrTemp.Assign(Value);
-  // uso este metodo para que a lis9ta seja limpa a cada nova inserção
- // FstrTemp := Value;
-  for I := FItems.Count - 1 downto 0 do
-  Begin
 { TODO 5 -oRuan Diego -cItems : Preciso Corrigir este Metodo, pois não está inserindo adequadamente os itens }
-    FstrTemp.Add(FItems.Strings[I]);
-  End;
+  FItems.Assign(Value);
 
   for I := FItems.Count - 1 downto 0 do
   Begin
@@ -370,9 +359,16 @@ begin
     FlblNomeItem.Text := FItems.Strings[I];
     FlblNomeItem.Parent := FItem;
     FlblNomeItem.Name := lbItem_Comp_Nome + IntToStr(I + 1);
-
+    FstrTemp.Add(FItems.Strings[I]);
   End;
-  FstrTemp.Clear;
+
+  for I := 0 to FItems.Count -1 do
+  begin
+    J := FstrTemp.IndexOf(FItems.Strings[I]);
+    if J > -1 then
+       FstrTemp.Delete(J);
+  end;
+
 end;
 
 { TFundoMenu }
