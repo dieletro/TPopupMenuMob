@@ -179,6 +179,7 @@ type
     procedure SetAoClicar(const Value: TNotifyEvent);
     procedure SetAoExibir(const Value: TNotifyEvent);
     property AoClicar: TNotifyEvent read FAoClicar write SetAoClicar;
+    procedure Paint; override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -251,6 +252,12 @@ end;
 destructor TPopupMenuMob.Destroy;
 begin
   inherited;
+end;
+
+procedure TPopupMenuMob.Paint;
+begin
+  inherited;
+  BringToFront;
 end;
 
 procedure TPopupMenuMob.SetItens(const Value: TStrings);
@@ -349,7 +356,7 @@ begin
  // FstrTemp := Value;
   for I := FItems.Count - 1 downto 0 do
   Begin
-    FstrTemp := FItems.Strings[I];
+    FstrTemp.Add(FItems.Strings[I]);
   End;
 
   for I := FstrTemp.Count - 1 downto 0 do
