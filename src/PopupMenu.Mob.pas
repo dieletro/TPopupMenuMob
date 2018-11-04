@@ -356,17 +356,18 @@ begin
  // FstrTemp := Value;
   for I := FItems.Count - 1 downto 0 do
   Begin
+{ TODO 5 -oRuan Diego -cItems : Preciso Corrigir este Metodo, pois não está inserindo adequadamente os itens }
     FstrTemp.Add(FItems.Strings[I]);
   End;
 
-  for I := FstrTemp.Count - 1 downto 0 do
+  for I := FItems.Count - 1 downto 0 do
   Begin
     FItem := TItem.Create(nil);
     FItem.Parent := Self;
     FItem.Name := Item_Comp_Nome + IntToStr(I + 1);
 
     FlblNomeItem := TItemLabel.Create(nil);
-    FlblNomeItem.Text := FstrTemp.Strings[I];
+    FlblNomeItem.Text := FItems.Strings[I];
     FlblNomeItem.Parent := FItem;
     FlblNomeItem.Name := lbItem_Comp_Nome + IntToStr(I + 1);
 
