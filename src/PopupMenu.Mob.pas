@@ -228,7 +228,7 @@ begin
   Position.Y := lyMenu_Opcoes_PosicaoY;
   Margins.Left := lyMenu_Opcoes_Margem_Esquerda;
   Margins.Right := lyMenu_Opcoes_Margem_Direita;
-  Align := TAlignLayout.Client;
+  Align := TAlignLayout.Contents;
   Visible := True;
   Name := lyMenu_Opcoes_Comp_Nome + IntToStr(ComponentCount + 1);
 
