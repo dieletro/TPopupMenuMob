@@ -175,6 +175,9 @@ type
     FItems: TStrings;
     FAoExibir: TNotifyEvent;
     FAoClicar: TNotifyEvent;
+    rcOpcoes: TMenuOpcoes;
+    rcFundo: TFundoMenu;
+      MobScroll: TMobScroll;
     procedure SetItens(const Value: TStrings);
     procedure SetAoClicar(const Value: TNotifyEvent);
     procedure SetAoExibir(const Value: TNotifyEvent);
@@ -218,10 +221,6 @@ begin
 end;
 
 constructor TPopupMenuMob.Create(AOwner: TComponent);
-Var
-  rcOpcoes: TMenuOpcoes;
-  rcFundo: TFundoMenu;
-  MobScroll: TMobScroll;
 begin
   inherited;
   // Layout Principal
@@ -252,6 +251,7 @@ end;
 destructor TPopupMenuMob.Destroy;
 begin
   inherited;
+//  FreeAndNil(Self);
 end;
 
 procedure TPopupMenuMob.Paint;
@@ -270,6 +270,7 @@ end;
 constructor TMenuOpcoes.Create(AOwner: TComponent);
 begin
   inherited;
+
   // Padrão para criação do menu das Opções
   Align := TAlignLayout.Center;
   XRadius := XRadius_Padrao;
@@ -314,7 +315,13 @@ end;
 
 destructor TMenuOpcoes.Destroy;
 begin
-  //
+//  FItems.Destroy;
+//  FstrTemp.Destroy;
+//  lyTitulo.FreeInstance;
+//  FDivisor.FreeInstance;
+//  FlblTitulo.FreeInstance;
+//  FAnimacao.FreeInstance;
+//  FreeAndNil(Self);
   inherited;
 end;
 
@@ -346,7 +353,8 @@ var
   E: Integer;
   H, J: Integer;
 begin
-{ TODO 5 -oRuan Diego -cItems : Preciso Corrigir este Metodo, pois não está inserindo adequadamente os itens }
+{ TODO 5 -oRuan Diego -cItems : Preciso Corrigir este Metodo, pois não está
+inserindo adequadamente os itens }
   FItems.Assign(Value);
 
   for I := FItems.Count - 1 downto 0 do
