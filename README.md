@@ -9,5 +9,3 @@ Douglas Colombo
 
 Idealização do Projeto:
 Douglas Colombo
-
-<h1>Texto</h1>
