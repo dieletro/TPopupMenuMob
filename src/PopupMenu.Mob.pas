@@ -129,13 +129,14 @@ type
   private
     FItem: TItem;
     FstrTemp: TStrings; // Armasena os Itens inseridos...
-    FAoFechar: TNotifyEvent;
     FItems: TStrings;
-    FAoDestruir: TNotifyEvent;
-    procedure SetAoFechar(const Value: TNotifyEvent);
+//    FAoDestruir: TNotifyEvent;
+//    FAoFechar: TNotifyEvent;
+//    procedure SetAoFechar(const Value: TNotifyEvent);
+//    procedure SetAoDestruir(const Value: TNotifyEvent);
     procedure SetItems(const Value: TStrings);
     function GetItems: TStrings;
-    procedure SetAoDestruir(const Value: TNotifyEvent);
+
     procedure DoPaint; override;
     { private declarations }
   protected
@@ -252,11 +253,11 @@ destructor TPopupMenuMob.Destroy;
 begin
   inherited;
 
-if rcOpcoes <> nil then
-  rcOpcoes.Free;
-
-if rcFundo <> nil then
-  rcFundo.Free;
+//if rcOpcoes <> nil then
+//  rcOpcoes.Free;
+//
+//if rcFundo <> nil then
+//  rcFundo.Free;
 end;
 
 procedure TPopupMenuMob.Paint;
@@ -314,7 +315,6 @@ begin
   // Animação que será usada nos Objetos...
   FAnimacao := TAnimacaoF.Create(nil);
   FAnimacao.Parent := Self;
-  FAnimacao.OnFinish := AoFechar;
 
 end;
 
@@ -322,23 +322,23 @@ destructor TMenuOpcoes.Destroy;
 begin
   inherited;
 
-  if lyTitulo <> nil then
-    lyTitulo.Free;
-
-  if FDivisor <> nil then
-    FDivisor.Free;
-
-  if FlblTitulo <> nil then
-    FlblTitulo.Free;
-
-  if FAnimacao <> nil then
-    FAnimacao.Free;
-
-  if FItems <> nil then
-    FItems.Free;
-
-  if FstrTemp <> nil then
-    FstrTemp.Free;
+//  if lyTitulo <> nil then
+//    lyTitulo.Free;
+//
+//  if FDivisor <> nil then
+//    FDivisor.Free;
+//
+//  if FlblTitulo <> nil then
+//    FlblTitulo.Free;
+//
+//  if FAnimacao <> nil then
+//    FAnimacao.Free;
+//
+//  if FItems <> nil then
+//    FItems.Free;
+//
+//  if FstrTemp <> nil then
+//    FstrTemp.Free;
 
 end;
 
@@ -353,16 +353,16 @@ begin
   Result := FItems;
 end;
 
-procedure TMenuOpcoes.SetAoDestruir(const Value: TNotifyEvent);
-begin
-  FAoDestruir := Value;
-end;
-
-procedure TMenuOpcoes.SetAoFechar(const Value: TNotifyEvent);
-begin
-  FAoFechar := Value;
-  FAnimacao.Enabled := False;
-end;
+//procedure TMenuOpcoes.SetAoDestruir(const Value: TNotifyEvent);
+//begin
+//  FAoDestruir := Value;
+//end;
+//
+//procedure TMenuOpcoes.SetAoFechar(const Value: TNotifyEvent);
+//begin
+//  FAoFechar := Value;
+//  FAnimacao.Enabled := False;
+//end;
 
 procedure TMenuOpcoes.SetItems(const Value: TStrings);
 var
