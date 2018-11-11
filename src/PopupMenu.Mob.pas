@@ -251,7 +251,12 @@ end;
 destructor TPopupMenuMob.Destroy;
 begin
   inherited;
-//  FreeAndNil(Self);
+
+if rcOpcoes <> nil then
+  rcOpcoes.Free;
+
+if rcFundo <> nil then
+  rcFundo.Free;
 end;
 
 procedure TPopupMenuMob.Paint;
@@ -315,13 +320,25 @@ end;
 
 destructor TMenuOpcoes.Destroy;
 begin
-//  FItems.Destroy;
-//  FstrTemp.Destroy;
-//  lyTitulo.FreeInstance;
-//  FDivisor.FreeInstance;
-//  FlblTitulo.FreeInstance;
-//  FAnimacao.FreeInstance;
-//  FreeAndNil(Self);
+
+if lyTitulo <> nil then
+  lyTitulo.Free;
+
+if FDivisor <> nil then
+  FDivisor.Free;
+
+if FlblTitulo <> nil then
+  FlblTitulo.Free;
+
+if FAnimacao <> nil then
+  FAnimacao.Free;
+
+if FItems <> nil then
+  FItems.Free;
+
+if FstrTemp <> nil then
+  FstrTemp.Free;
+
   inherited;
 end;
 
