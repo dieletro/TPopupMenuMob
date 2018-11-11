@@ -140,8 +140,8 @@ type
     { private declarations }
   protected
     { protected declarations }
-    property AoFechar: TNotifyEvent read FAoFechar write SetAoFechar;
-    property AoDestruir: TNotifyEvent read FAoDestruir write SetAoDestruir;
+//    property AoFechar: TNotifyEvent read FAoFechar write SetAoFechar;
+//    property AoDestruir: TNotifyEvent read FAoDestruir write SetAoDestruir;
   public
     { public declarations }
     constructor Create(AOwner: TComponent); override;
@@ -320,26 +320,26 @@ end;
 
 destructor TMenuOpcoes.Destroy;
 begin
-
-if lyTitulo <> nil then
-  lyTitulo.Free;
-
-if FDivisor <> nil then
-  FDivisor.Free;
-
-if FlblTitulo <> nil then
-  FlblTitulo.Free;
-
-if FAnimacao <> nil then
-  FAnimacao.Free;
-
-if FItems <> nil then
-  FItems.Free;
-
-if FstrTemp <> nil then
-  FstrTemp.Free;
-
   inherited;
+
+  if lyTitulo <> nil then
+    lyTitulo.Free;
+
+  if FDivisor <> nil then
+    FDivisor.Free;
+
+  if FlblTitulo <> nil then
+    FlblTitulo.Free;
+
+  if FAnimacao <> nil then
+    FAnimacao.Free;
+
+  if FItems <> nil then
+    FItems.Free;
+
+  if FstrTemp <> nil then
+    FstrTemp.Free;
+
 end;
 
 procedure TMenuOpcoes.DoPaint;
