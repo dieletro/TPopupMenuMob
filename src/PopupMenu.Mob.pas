@@ -112,8 +112,8 @@ type
     destructor Destroy; override;
   end;
 
-Var
-  FlblNomeItem: TItemLabel;
+  // Var
+  // FlblNomeItem: TItemLabel;
 
 type
   TItem = class(TFundo)
@@ -130,10 +130,7 @@ type
     FItem: TItem;
     FstrTemp: TStrings; // Armasena os Itens inseridos...
     FItems: TStrings;
-//    FAoDestruir: TNotifyEvent;
-//    FAoFechar: TNotifyEvent;
-//    procedure SetAoFechar(const Value: TNotifyEvent);
-//    procedure SetAoDestruir(const Value: TNotifyEvent);
+    FlblNomeItem: TItemLabel;
     procedure SetItems(const Value: TStrings);
     function GetItems: TStrings;
 
@@ -141,8 +138,6 @@ type
     { private declarations }
   protected
     { protected declarations }
-//    property AoFechar: TNotifyEvent read FAoFechar write SetAoFechar;
-//    property AoDestruir: TNotifyEvent read FAoDestruir write SetAoDestruir;
   public
     { public declarations }
     constructor Create(AOwner: TComponent); override;
@@ -178,7 +173,7 @@ type
     FAoClicar: TNotifyEvent;
     rcOpcoes: TMenuOpcoes;
     rcFundo: TFundoMenu;
-      MobScroll: TMobScroll;
+    MobScroll: TMobScroll;
     procedure SetItens(const Value: TStrings);
     procedure SetAoClicar(const Value: TNotifyEvent);
     procedure SetAoExibir(const Value: TNotifyEvent);
@@ -253,11 +248,11 @@ destructor TPopupMenuMob.Destroy;
 begin
   inherited;
 
-//if rcOpcoes <> nil then
-//  rcOpcoes.Free;
-//
-//if rcFundo <> nil then
-//  rcFundo.Free;
+  // if rcOpcoes <> nil then
+  // rcOpcoes.Free;
+  //
+  // if rcFundo <> nil then
+  // rcFundo.Free;
 end;
 
 procedure TPopupMenuMob.Paint;
@@ -296,7 +291,7 @@ begin
 
   // Lista de Itens do Menu
   FItems := TStringList.Create;
-  FstrTemp := TStrings.Create;
+  FstrTemp := TStringList.Create;
   // TStringList(FItems).OnChange := DoItemsChanged;
 
   // Layout de Fundo
@@ -322,23 +317,23 @@ destructor TMenuOpcoes.Destroy;
 begin
   inherited;
 
-//  if lyTitulo <> nil then
-//    lyTitulo.Free;
-//
-//  if FDivisor <> nil then
-//    FDivisor.Free;
-//
-//  if FlblTitulo <> nil then
-//    FlblTitulo.Free;
-//
-//  if FAnimacao <> nil then
-//    FAnimacao.Free;
-//
-//  if FItems <> nil then
-//    FItems.Free;
-//
-//  if FstrTemp <> nil then
-//    FstrTemp.Free;
+  // if lyTitulo <> nil then
+  // lyTitulo.Free;
+  //
+  // if FDivisor <> nil then
+  // FDivisor.Free;
+  //
+  // if FlblTitulo <> nil then
+  // FlblTitulo.Free;
+  //
+  // if FAnimacao <> nil then
+  // FAnimacao.Free;
+  //
+  // if FItems <> nil then
+  // FItems.Free;
+  //
+  // if FstrTemp <> nil then
+  // FstrTemp.Free;
 
 end;
 
@@ -353,49 +348,73 @@ begin
   Result := FItems;
 end;
 
-//procedure TMenuOpcoes.SetAoDestruir(const Value: TNotifyEvent);
-//begin
-//  FAoDestruir := Value;
-//end;
-//
-//procedure TMenuOpcoes.SetAoFechar(const Value: TNotifyEvent);
-//begin
-//  FAoFechar := Value;
-//  FAnimacao.Enabled := False;
-//end;
-
 procedure TMenuOpcoes.SetItems(const Value: TStrings);
 var
-  I: Integer;
+  A: Integer;
   E: Integer;
-  H, J: Integer;
-begin
-{ TODO 5 -oRuan Diego -cItems : Preciso Corrigir este Metodo, pois não está
-inserindo adequadamente os itens }
-  FItems.Assign(Value);
+  I: Integer;
+  O: Integer;
+  U: Integer;
 
-  for I := FItems.Count - 1 downto 0 do
+  procedure CriarItem;
   Begin
     FItem := TItem.Create(nil);
     FItem.Parent := Self;
-    FItem.Name := Item_Comp_Nome + IntToStr(I + 1);
 
     FlblNomeItem := TItemLabel.Create(nil);
     FlblNomeItem.Text := FItems.Strings[I];
     FlblNomeItem.Parent := FItem;
-    FlblNomeItem.Name := lbItem_Comp_Nome + IntToStr(I + 1);
+    //Add o item novo a lista
     FstrTemp.Add(FItems.Strings[I]);
   End;
 
-  for I := 0 to FItems.Count -1 do
-  begin
-    J := FstrTemp.IndexOf(FItems.Strings[I]);
-    if J > -1 then
-       FstrTemp.Delete(J);
+begin
+  FItems.Assign(Value);
+  { TODO 5 -oDiego -cItems : Não esta aceitando itens com o mesmo nome... }
+  for I := FItems.Count - 1 downto 0 do
+  Begin
+    O := FstrTemp.IndexOf(FItems.Strings[I]);
+    if (O = -1) then // Não Está na Lista...
+    Begin
+      CriarItem;
+    End
+      Else //O Item já está lista...
+    Begin
+      // Se a contagem dos itens da lista for maior que a lista temporaria, inserir...
+      if ((FItems.Count - 1) > (FstrTemp.Count - 1)) then
+        CriarItem
+      Else
+      //Se For menor Então Remova o respectivo Item
+      if ((FItems.Count - 1) < (FstrTemp.Count - 1)) then
+      Begin
+        { TODO 5 -oDiego -cItems :
+        Varrer os componentes TItem e TLabelItem para Excluir o
+        Componente respectivo ao nome que não esta na Lista, caso
+        ele realmente exista }
+        for U := 0 to FstrTemp.Count - 1 do
+        Begin
+          O := FItems.IndexOf(FstrTemp.Strings[U]);
+          if O = - 1 then
+          Begin
+            for E := 0 to FItem.ComponentCount -1 do
+            Begin
+              if FItem.Components[E].Name = FstrTemp.Strings[U] then
+              Begin
+                FItem.Components[E].Destroy;
+                //Remover o Item da Lista FstrTemp aki...
+                //with TLabel(FindComponent('novo label') do
+                //    begin
+                //      Free;
+                //    end;
+              End;
+            End;
+          End;
+        End;
+      End;
+
+    End;
   end;
-
-end;
-
+End;
 { TFundoMenu }
 
 constructor TFundoMenu.Create(AOwner: TComponent);
